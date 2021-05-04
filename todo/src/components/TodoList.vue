@@ -1,6 +1,24 @@
 <template>
   <div>
-    <ul>
+    <b-list-group>
+      <b-list-group-item v-for="todoItem, index in todoItems" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-3 mb-1 bg-white rounded">
+        <b-icon icon="square" v-if="!todoItem.completed" scale="2" class="checkBtn" 
+          v-bind:class="{getCheck: todoItem.completed}" 
+          v-on:click="toggleComplete(todoItem, index)">
+        </b-icon>
+        <b-icon icon="check-square-fill" v-if="todoItem.completed" scale="2" class="checkBtn" 
+          v-bind:class="{getCheck: todoItem.completed}" 
+          v-on:click="toggleComplete(todoItem, index)">
+        </b-icon>    
+        <span class="list" v-bind:class="{textCompleted : todoItem.completed}"> 
+          {{ todoItem.item }} 
+        </span>
+        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
+          <b-icon icon="trash-fill"></b-icon>
+        </span>
+      </b-list-group-item>
+    </b-list-group>
+    <!-- <ul>
       <li v-for="todoItem, index in todoItems" v-bind:key="todoItem.item" class="shawdow">
         <i class="checkBtn fas fa-check" 
           v-bind:class="{checkBtnCompleted: todoItem.completed}" 
@@ -13,7 +31,7 @@
           <i class="fas fa-trash-alt"></i>
         </span>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -21,7 +39,7 @@
 export default {
   data() {
     return {
-      todoItems: []    
+      todoItems: [],
     }
   },
    
@@ -36,7 +54,7 @@ export default {
       // 로컬 스토리지 데이터 갱신
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
-    }
+    },
   },
 
   created() {
@@ -78,7 +96,7 @@ export default {
 
   .checkBtn {
     line-height: 45px;
-    color: #62ac62;
+    color: #999;
     margin-right: 5px;
     cursor: pointer;
   }
@@ -90,5 +108,9 @@ export default {
   .textCompleted {
     text-decoration: line-through;
     color: #b3adad;
+  }
+
+  .list{
+    padding-left: 20px;
   }
 </style>

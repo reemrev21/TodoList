@@ -12,6 +12,7 @@ export default {
 
 <style scoped>
   h1 {
+    text-align: center;
     font-family: 'Lato', sans-serif;
     color: #000;
     font-weight: 900;
