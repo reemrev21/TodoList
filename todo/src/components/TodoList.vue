@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-list-group>
-      <b-list-group-item v-for="todoItem, index in todoItems" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-3 mb-1 bg-white rounded">
+      <b-list-group-item v-for="todoItem, index in propsdata" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-3 mb-1 bg-white rounded">
         <b-icon icon="square" v-if="!todoItem.completed" scale="2" class="checkBtn" 
           v-bind:class="{getCheck: todoItem.completed}" 
           v-on:click="toggleComplete(todoItem, index)">
@@ -37,12 +37,8 @@
 
 <script>
 export default {
-  data() {
-    return {
-      todoItems: [],
-    }
-  },
-   
+  props: ['propsdata'],
+
   methods: {
     removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem)
@@ -55,16 +51,6 @@ export default {
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
     },
-  },
-
-  created() {
-    if(localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
-          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
-        }
-      }
-    }
   },
 }
 </script>

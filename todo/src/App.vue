@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
+    <TodoInput v-on:="addOneItem"></TodoInput>
+    <TodoList v-bind:propsdata="todoItems"></TodoList>
     <TodoFooter></TodoFooter>
   </div>
 </template>
@@ -20,7 +20,30 @@ export default {
     TodoInput,
     TodoList,
     TodoFooter
-  }
+  },
+
+  methods: {
+    addOneItem() {
+      const obj = {completed: false, item: this.newTodoItem};
+      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+    }
+  },
+
+  data() {
+    return {
+      todoItems: []    
+    }
+  },
+
+  created() {
+    if(localStorage.length > 0) {
+      for (var i = 0; i < localStorage.length; i++) {
+        if(localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))))
+        }
+      }
+    }
+  },
 }
 </script>
 
