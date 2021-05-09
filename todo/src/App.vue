@@ -22,6 +22,12 @@ export default {
     TodoFooter
   },
 
+  data() {
+    return {
+      todoItems: []    
+    }
+  },
+
   methods: {
     addOneItem(todoItem) {
       if (todoItem.key != this,todoItem) {
@@ -48,12 +54,6 @@ export default {
       localStorage.clear();
       // 배열을 비워주어야 화면에 갱신된다.
       this.todoItems = [];
-    }
-  },
-
-  data() {
-    return {
-      todoItems: []    
     }
   },
 

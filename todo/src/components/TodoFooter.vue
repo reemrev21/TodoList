@@ -3,10 +3,6 @@
     <b-button variant="danger" v-on:click="clearTodo">
       Clear All
     </b-button>
-
-    <!-- <span class="clearAllBtn" v-on:click="clearTodo">
-      Clear all
-    </span> -->
   </div>
 </template>
 
