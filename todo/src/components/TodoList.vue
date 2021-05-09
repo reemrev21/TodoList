@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-list-group>
+    <transition-group name="list" tag="b-list-group">
       <b-list-group-item v-for="todoItem, index in propsdata" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-3 mb-1 bg-white rounded">
         <b-icon icon="square" v-if="!todoItem.completed" scale="2" class="checkBtn" 
           v-bind:class="{getCheck: todoItem.completed}" 
@@ -11,13 +11,13 @@
           v-on:click="toggleComplete(todoItem, index)">
         </b-icon>    
         <span class="list" v-bind:class="{textCompleted : todoItem.completed}"> 
-         <b> {{ todoItem.item }} </b>
+        <b> {{ todoItem.item }} </b>
         </span>
         <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <b-icon icon="trash-fill"></b-icon>
         </span>
       </b-list-group-item>
-    </b-list-group>
+    </transition-group>
   </div>
 </template>
 
@@ -81,4 +81,15 @@ export default {
   .list{
     padding-left: 20px;
   }
+
+  .list-enter-active, .list-leave-active {
+    transition: all 1s;
+  }
+
+  .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  /*  리스트 아이템 트랜지션 */
 </style>
