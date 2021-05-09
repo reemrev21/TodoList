@@ -11,27 +11,13 @@
           v-on:click="toggleComplete(todoItem, index)">
         </b-icon>    
         <span class="list" v-bind:class="{textCompleted : todoItem.completed}"> 
-          {{ todoItem.item }} 
+         <b> {{ todoItem.item }} </b>
         </span>
         <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
           <b-icon icon="trash-fill"></b-icon>
         </span>
       </b-list-group-item>
     </b-list-group>
-    <!-- <ul>
-      <li v-for="todoItem, index in todoItems" v-bind:key="todoItem.item" class="shawdow">
-        <i class="checkBtn fas fa-check" 
-          v-bind:class="{checkBtnCompleted: todoItem.completed}" 
-          v-on:click="toggleComplete(todoItem, index)">
-        </i>
-        <span v-bind:class="{textCompleted : todoItem.completed}"> 
-          {{ todoItem.item }} 
-        </span>
-        <span class="removeBtn" v-on:click="removeTodo(todoItem, index)">
-          <i class="fas fa-trash-alt"></i>
-        </span>
-      </li>
-    </ul> -->
   </div>
 </template>
 
@@ -41,15 +27,11 @@ export default {
 
   methods: {
     removeTodo(todoItem, index) {
-      localStorage.removeItem(todoItem)
-      this.todoItems.splice(index, 1);
+      this.$emit('removeItem', todoItem, index)
     },
 
-    toggleComplete(todoItem) {
-      todoItem.completed =! todoItem.completed;
-      // 로컬 스토리지 데이터 갱신
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
+    toggleComplete(todoItem, index) {
+      this.$emit('toggleItem', todoItem, index)
     },
   },
 }
