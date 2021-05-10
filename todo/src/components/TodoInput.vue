@@ -1,6 +1,6 @@
 <template>
   <div class="top shawdow">
-    <b-input-group size="lg" class="shadow-sm mb-1 bg-white rounded">
+    <b-input-group size="mg" class=" shadow-sm bg-white rounded">
       <!-- item 추가 input box -->
       <b-form-input type="text" placeholder="Add todo" 
         v-model="newTodoItem" v-on:keyup.enter="addTodo">
@@ -14,12 +14,11 @@
     <!-- Modal -->
     <Modal v-if="showModal" @close="showModal = false">
       <h3 slot="header"> 
-        경고! 
         <b-icon icon="x" class="closeModalBtn" @click="showModal = false">
           닫기
         </b-icon>
       </h3>
-      <h3 slot="body"> 할 일을 입력하세요! </h3>
+      <h5 slot="body"> 할 일을 입력하세요! </h5>
     </Modal>
   </div>
 </template>
@@ -28,7 +27,7 @@
 import Modal from './common/Modal'
 
 export default {
-  data: function() {
+  data() {
     return {
       newTodoItem: "",
       showModal: false
@@ -36,13 +35,13 @@ export default {
   },
 
   components: {
-    Modal: Modal
+    Modal
   },
 
   methods: {
-    addTodo: function() {
+    addTodo() {
       if(this.newTodoItem !== '') { 
-        this.$emit('addTodoItem', this.newTodoItem)
+        this.$store.commit('addOneItem', this.newTodoItem)
         this.clearInput();
       }
       else {
@@ -51,7 +50,7 @@ export default {
       }
     },
     
-    clearInput: function() {
+    clearInput() {
       this.newTodoItem = '';
     }
   }
@@ -64,9 +63,7 @@ export default {
   }
 
   .inputBox{
-    /* width: 70%; */
     background: white;
-    /* height: 50px; */
     line-height: 50px;
     border-radius: 5px;
     text-align: center;
@@ -74,15 +71,9 @@ export default {
 
   .inputBox input{
     border-style: none;
-    /* font-size: 0.9rem; */
   }
 
   .addContainer{
-    /* float: right;
-    background: linear-gradient(to right, #999, #999); */
-    /* display: block; */
-    /* width: 3rem; */
-    /* border-radius: 0 5px 5px 0; */
     cursor: pointer;
   }
 
@@ -92,7 +83,7 @@ export default {
   }
 
   .top{
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   .closeModalBtn{

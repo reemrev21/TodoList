@@ -1,15 +1,17 @@
 <template>
   <div>
     <transition-group name="list" tag="b-list-group">
-      <b-list-group-item v-for="todoItem, index in propsdata" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-3 mb-1 bg-white rounded">
-        <b-icon icon="square" v-if="!todoItem.completed" scale="2" class="checkBtn" 
-          v-bind:class="{getCheck: todoItem.completed}" 
-          v-on:click="toggleComplete(todoItem, index)">
-        </b-icon>
-        <b-icon icon="check-square-fill" v-if="todoItem.completed" scale="2" class="checkBtn" 
-          v-bind:class="{getCheck: todoItem.completed}" 
-          v-on:click="toggleComplete(todoItem, index)">
-        </b-icon>    
+      <b-list-group-item v-for="todoItem, index in this.$store.state.todoItems" v-bind:key="todoItem.item" class="d-flex justify-content-between shadow-sm p-2 mb-1 bg-white rounded">
+        <span>
+          <b-icon icon="square" v-if="!todoItem.completed" scale="1" class="checkBtn" 
+            v-bind:class="{getCheck: todoItem.completed}" 
+            v-on:click="toggleComplete(todoItem, index)">
+          </b-icon>
+          <b-icon icon="check-square-fill" v-if="todoItem.completed" scale="1" class="checkBtn" 
+            v-bind:class="{getCheck: todoItem.completed}" 
+            v-on:click="toggleComplete(todoItem, index)">
+          </b-icon>
+        </span> 
         <span class="list" v-bind:class="{textCompleted : todoItem.completed}"> 
         <b> {{ todoItem.item }} </b>
         </span>
@@ -23,39 +25,21 @@
 
 <script>
 export default {
-  props: ['propsdata'],
-
   methods: {
     removeTodo(todoItem, index) {
-      this.$emit('removeItem', todoItem, index)
+      this.$store.commit('removeOneItem', { todoItem, index })
+      // store를 사용하기 위해서는 todoitem, index를 객체로 변환해야함
+      // this.$store.commit('removeOneItem', todoItem, index)
     },
 
     toggleComplete(todoItem, index) {
-      this.$emit('toggleItem', todoItem, index)
+      this.$store.commit('toggleOneItem', { todoItem, index })
     },
   },
 }
 </script>
 
 <style scoped>
-  ul {
-    list-style-type: none;
-    padding-left: 0px;
-    margin-top: 0;
-    text-align: left;
-  }
-
-  li {
-    display: flex;
-    min-height: 50px;
-    height: 50px;
-    line-height: 50px;
-    margin: 0.5rem 0;
-    padding: 0 0.9rem;
-    background: white;
-    border-radius: 5px;
-  }
-
   .removeBtn {
     margin-left: auto;
     color: #de4343;
@@ -65,8 +49,9 @@ export default {
   .checkBtn {
     line-height: 45px;
     color: #999;
-    margin-right: 5px;
+    /* margin-right: 5px; */
     cursor: pointer;
+    float: center;
   }
 
   .checkBtnCompleted {
@@ -80,8 +65,10 @@ export default {
 
   .list{
     padding-left: 20px;
+    /* padding-bottom: 20px; */
   }
 
+ /*  리스트 아이템 트랜지션 */
   .list-enter-active, .list-leave-active {
     transition: all 1s;
   }
@@ -91,5 +78,5 @@ export default {
     transform: translateY(30px);
   }
 
-  /*  리스트 아이템 트랜지션 */
+ 
 </style>
